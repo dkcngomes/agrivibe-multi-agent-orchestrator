@@ -1,8 +1,5 @@
 """The FieldSat MCP server's tools, loaded as LangChain tools, and its instructions for using them.
 
-FieldSat (built in Level 6 Lesson 3) runs as its own process. This app never imports
-its code: it asks the server which tools it has, over MCP, when the app starts.
-
 How to use the tools (which one to call first, what each argument means) is the server's
 business, because only the server knows when its tools change. So the agents' own prompts
 never describe the tools: each tool's description and argument schema come from the server,
@@ -18,10 +15,10 @@ from langchain.tools import BaseTool
 
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")  # langchain.mcp is marked beta; the warning is expected
-    from langchain.mcp import MCPAdapter
 
-START_FIELDSAT = "uv run fieldsat --demo --transport http --port 8001"
+from langchain.mcp import MCPAdapter
 
+START_FIELDSAT = "uv run fieldsat --transport http --port 8001"
 
 @dataclass
 class FieldSat:
