@@ -575,3 +575,6 @@ For the multi-agent chat, call `POST /chat` instead:
 - `tools_called` render as live chips: one per specialist the orchestrator asked.
 - `findings` render as the evidence panel, one card per specialist: the `summary` as text,
   and `data` for the numbers and badges (rain in mm, NDVI change, data quality).
+
+
+## Startup Locally : uv run fastapi dev
