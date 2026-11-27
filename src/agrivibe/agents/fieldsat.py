@@ -13,33 +13,37 @@ from langchain_core.messages import ToolMessage
 from langgraph.runtime import Runtime
 from pydantic import BaseModel
 
-
+# FIELD ID Context is being persisted in the agent memory  
+# FIELD ID Context is used by MCP server tools for Satellite Lookup and Weather Lookups
 @dataclass
 class FieldContext:
     """The field to report on. Pass it with every run: `ainvoke(..., context=FieldContext(field_id))`."""
-
     field_id: str
-
 
 class FieldReport(BaseModel):
     """A specialist's answer, found under `structured_response`."""
-
     field_id: str  # from the context
     summary: str  # the agent's last message, in its own words
     data: dict[str, Any] | None  # FieldSat's reply, exactly as the server sent it. None if the tool failed.
 
-
+# AgentMiddleware of Lang Chain is being used to 
+# wrap the tool call 'awrap_tool_call' to MCP server 
+# execute the @after_agent_hook to create and object of type Field report 
+# using the information Provided by MCP server tools
 class FieldSatReport(AgentMiddleware[AgentState, FieldContext]):
     """Pins every FieldSat call to the context's field, then builds the FieldReport."""
 
     async def awrap_tool_call(self, request, handler):
         """Runs the tool on the context's field, whatever field_id the model wrote."""
+
         context = cast(FieldContext, request.runtime.context)  # the type checker cannot see it from here
+
         args = {**request.tool_call["args"], "field_id": context.field_id}
         return await handler(request.override(tool_call={**request.tool_call, "args": args}))
 
     def after_agent(self, state: AgentState, runtime: Runtime[FieldContext]) -> dict:
         """Builds the FieldReport once the agent has finished."""
+
         replies = [m for m in state["messages"] if isinstance(m, ToolMessage) and m.artifact]
         report = FieldReport(
             field_id=runtime.context.field_id,
