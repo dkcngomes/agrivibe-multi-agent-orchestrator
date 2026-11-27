@@ -11,8 +11,8 @@ from agrivibe.core.reranker import Reranker, rerank
 
 # The three document classes FieldOracle serves. Every chunk stores one of these
 # in its metadata, so a search can be limited to a single class.
-Category = Literal["cultivation_guide", "policy", "farm_record"]
 
+Category = Literal["cultivation_guide", "policy", "farm_record"]
 
 def create_vector_store(settings: Settings) -> PineconeVectorStore:
     """Connects to the Pinecone index, creating it on first run.

@@ -18,7 +18,7 @@ with warnings.catch_warnings():
 
 from langchain.mcp import MCPAdapter
 
-START_FIELDSAT = "uv run fieldsat --transport http --port 8001"
+START_FIELDSAT = "uv run fieldsat --transport http --port 8001" #MCP Server http mode Start-Up Command.
 
 @dataclass
 class FieldSat:
@@ -56,7 +56,7 @@ async def load_fieldsat(url: str | FastMCP) -> FieldSat:
         RuntimeError: If the server cannot be reached.
     """
     try:
-        async with MCPAdapter(url) as adapter:
+        async with MCPAdapter(url) as adapter: # MCP Adapter Made of Lang Chain to be connected to Fast MCP Server
             tools = await adapter.list_tools()
             # Sent once, when the session starts, so it is read while still connected.
             client = cast(Client, adapter.client)  # one server gives one client, never a ClientGroup
@@ -64,7 +64,7 @@ async def load_fieldsat(url: str | FastMCP) -> FieldSat:
     except Exception as error:
         raise RuntimeError(
             f"Could not reach the FieldSat MCP server at {url}. "
-            f"Start it from your Level 6 Lesson 3 repo with: {START_FIELDSAT}"
+            f"Start it from code repo with: {START_FIELDSAT}"
         ) from error
 
 
