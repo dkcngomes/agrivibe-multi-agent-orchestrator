@@ -23,7 +23,7 @@ def build_farm_context_agent(model: BaseChatModel, fieldsat: FieldSat):
         model,
         tools=pick_tools(fieldsat.tools, "get_satellite_analysis"),
         system_prompt=fieldsat.prompt(SYSTEM_PROMPT),
-        middleware=[FieldSatReport()],
+        middleware=[FieldSatReport()], # *with default kwargs
         context_schema=FieldContext,
         name="farm_context_agent",
     )

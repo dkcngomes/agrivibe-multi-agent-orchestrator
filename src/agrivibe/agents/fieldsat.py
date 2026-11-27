@@ -33,12 +33,16 @@ class FieldReport(BaseModel):
 class FieldSatReport(AgentMiddleware[AgentState, FieldContext]):
     """Pins every FieldSat call to the context's field, then builds the FieldReport."""
 
-    async def awrap_tool_call(self, request, handler):
+    async def awrap_tool_call(self, request, handler): #async wrap tool call 
         """Runs the tool on the context's field, whatever field_id the model wrote."""
+        
+        # lookup the context and pass it forward
+        context = cast(FieldContext, request.runtime.context)# the type checker cannot see it from here, so cast it
 
-        context = cast(FieldContext, request.runtime.context)  # the type checker cannot see it from here
+        # field id is read from current context and overrides to modify model provided context.field_id to session saved field_id
+        args = {**request.tool_call["args"], "field_id": context.field_id} 
 
-        args = {**request.tool_call["args"], "field_id": context.field_id}
+        # call the handler to execute the tool with modified args
         return await handler(request.override(tool_call={**request.tool_call, "args": args}))
 
     def after_agent(self, state: AgentState, runtime: Runtime[FieldContext]) -> dict:
@@ -47,7 +51,7 @@ class FieldSatReport(AgentMiddleware[AgentState, FieldContext]):
         replies = [m for m in state["messages"] if isinstance(m, ToolMessage) and m.artifact]
         report = FieldReport(
             field_id=runtime.context.field_id,
-            summary=state["messages"][-1].text,
-            data=replies[-1].artifact["structured_content"] if replies else None,
+            summary=state["messages"][-1].text, # last message agent sent in
+            data=replies[-1].artifact["structured_content"] if replies else None, # dictionary object of all the replier and data tool sent in
         )
         return {"structured_response": report}
