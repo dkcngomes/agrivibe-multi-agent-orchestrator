@@ -67,7 +67,7 @@ async def load_fieldsat(url: str | FastMCP) -> FieldSat:
             f"Start it from code repo with: {START_FIELDSAT}"
         ) from error
 
-
+# helper method to pick tool 
 def pick_tools(tools: list[BaseTool], *names: str) -> list[BaseTool]:
     """Returns the tools with these names, in that order.
 

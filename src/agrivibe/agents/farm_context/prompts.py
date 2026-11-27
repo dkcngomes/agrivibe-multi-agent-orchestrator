@@ -10,3 +10,10 @@ unreliable, say so first.
 - Give every number exactly as the tool gave it.
 - NDVI measures how green the crop is, not why. Never name a cause such as pests, disease or fertiliser.
 - If the tool fails, say which data is missing and why."""
+
+# Use RISE 
+
+# R - Role 
+# I - Instructions 
+# S - Steps to follow 
+# E - Ending and what to ouput

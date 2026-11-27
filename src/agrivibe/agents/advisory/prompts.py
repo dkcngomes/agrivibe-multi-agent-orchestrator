@@ -13,3 +13,11 @@ where it came from: (satellite), (weather), or the passage ids in brackets from 
 so, and say what the farmer should check before acting.
 - Never diagnose a pest or a disease from satellite or weather numbers.
 - Use plain words and at most eight lines."""
+
+
+# Use RISE 
+
+# R - Role 
+# I - Instructions 
+# S - Steps to follow 
+# E - Ending and what to ouput

@@ -7,3 +7,11 @@ recently, how much is forecast, and whether heavy rain is recent or expected.
 - Give every number with its unit, exactly as the tool gave it. Do not give advice and do not \
 guess causes. Other agents do that.
 - If the tool fails, say which data is missing and why."""
+
+
+# Use RISE 
+
+# R - Role 
+# I - Instructions 
+# S - Steps to follow 
+# E - Ending and what to ouput

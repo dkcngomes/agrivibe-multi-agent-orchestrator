@@ -9,6 +9,7 @@ from agrivibe.agents.fieldoracle.tools import make_search_tool
 from agrivibe.core.reranker import Reranker
 
 
+# The Agent to communicate with Vector DB
 def build_fieldoracle_agent(
     model: BaseChatModel,
     vector_store: VectorStore,

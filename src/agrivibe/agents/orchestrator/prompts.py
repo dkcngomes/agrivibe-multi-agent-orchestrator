@@ -23,3 +23,11 @@ Call specialists that do not depend on each other in the same turn, so they run 
 
 Reply in short, plain sentences a farmer can follow. Keep the knowledge agent's citations in \
 brackets. If a specialist failed or found nothing, say what is missing."""
+
+
+# Use RISE 
+
+# R - Role 
+# I - Instructions 
+# S - Steps to follow 
+# E - Ending and what to ouput
