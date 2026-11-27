@@ -5,6 +5,7 @@ from agrivibe.agents.fieldsat import FieldContext, FieldSatReport
 from agrivibe.agents.weather.prompts import SYSTEM_PROMPT
 from agrivibe.core.mcp import FieldSat, pick_tools
 
+# AGENT WEATHER INFORMATION VIA MCP
 # FieldSat is an bject of MCP Adapter Made of Lang Chain to be connected to Fast MCP Server
 def build_weather_agent(model: BaseChatModel, fieldsat: FieldSat): 
     """Builds the Weather Agent: recent and forecast rain for one field, from FieldSat.

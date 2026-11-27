@@ -3,7 +3,7 @@ from langchain_core.language_models import BaseChatModel
 
 from agrivibe.agents.advisory.prompts import SYSTEM_PROMPT
 
-
+# AGENT for Building the agent graph for other Agents and writes the recommendation 
 def build_advisory_agent(model: BaseChatModel):
     """Builds the Advisory Agent: one grounded recommendation from the other agents' evidence.
 

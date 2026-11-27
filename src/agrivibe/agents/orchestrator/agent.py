@@ -8,7 +8,9 @@ from agrivibe.agents.orchestrator.prompts import SYSTEM_PROMPT
 from agrivibe.agents.orchestrator.tools import make_specialist_tools, save_requirements
 from agrivibe.core.mcp import FieldSat, pick_tools
 
-# User interaction Agent 
+# AGENT TO COMMUNICATE WITH USER
+# Keeps Conversation tagged with Check Pointer
+# Coordinate specialist agents
 def build_orchestrator(
     model: BaseChatModel,
     fieldsat: FieldSat,
