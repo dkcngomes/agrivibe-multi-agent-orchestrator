@@ -66,7 +66,7 @@ class AgriVibeState(AgentState):
     findings: Annotated[dict[str, Finding], merge_findings] 
 
 """
-    // Example Agri Vibe State
+    // Example Agri Vibe State after execution of tools
     {
         "field_oracle :"{
             "summary" : "satellite agent NDVI findings"
