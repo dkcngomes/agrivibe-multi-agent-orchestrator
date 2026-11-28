@@ -429,19 +429,24 @@ How it is wired:
 - `AgriVibeState` extends `AgentState` with `requirements` and `findings`, and
   `build_orchestrator` passes `state_schema=AgriVibeState`, `context_schema=FarmerContext`
   and a `store` to `create_agent`.
+  
 - A tool that needs memory takes `runtime: ToolRuntime[FarmerContext, AgriVibeState]`. The
   model never sees that argument; LangChain fills it in with `runtime.state`,
   `runtime.context`, `runtime.store` and `runtime.tool_call_id`.
+
 - A tool that changes state returns `Command(update=...)`, and the update must include the
   `ToolMessage` the model will read as the tool's result.
+
 - `findings` has a reducer, `merge_findings`. The Farm Context and Weather agents run in
   parallel and finish in the same step; without a reducer LangGraph refuses two writes to one
   key in one step. An empty dict clears the findings, and the service sends one with every
   message, so evidence never carries over from the previous question.
+
 - The specialists still get no messages. `brief` puts the saved requirements above the task,
   so a specialist knows the field without reading the chat. The Weather and Farm Context
   agents also get the saved `field_id` as `FieldContext` (step 09), so FieldSat is always
   asked about that field. With no saved field, their tools return a note instead of running.
+
 - `remember_the_farm` is `@dynamic_prompt` middleware. Before each model call it looks up
   this `user_id` in the store and adds the farmer's saved field to the system prompt, so a
   new conversation already knows it.
