@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """The specialists, wrapped as tools. The orchestrator calls an agent the way it calls any tool.
 
 This is LangChain's subagents pattern: each tool runs its specialist with `ainvoke` and
@@ -30,13 +36,11 @@ def brief(task: str, requirements: Requirements | None) -> str:
         f"{task}"
     )
 
-
 def as_text(finding: Finding) -> str:
     """Writes a finding for a model to read: the summary, then the data as JSON."""
     if not finding["data"]:
         return finding["summary"]
     return f"{finding['summary']}\nData: {json.dumps(finding['data'])}"
-
 
 def failed(error: Exception) -> Finding:
     """The finding for a specialist that raised, so one broken specialist does not end the whole answer."""
@@ -68,9 +72,13 @@ def save_requirements(
         timeframe: The period it is about, for example "this week". Use "now" if the farmer gave none.
     """
     requirements = Requirements(field_id=field_id, crop=crop, problem=problem, timeframe=timeframe)
+
     # Long-term memory: the farmer's field is still known in their next conversation.
     if runtime.store is not None:
         runtime.store.put(("farmers", runtime.context.user_id), "farm", {"field_id": field_id, "crop": crop})
+
+    # returns a command object of type lang graph to update the state of agrivibe state object    
+    # purpose is to let know to model that , the perticular tool was executed
     return Command(update={
         "requirements": requirements,
         "messages": [ToolMessage(f"Saved: {requirements}", tool_call_id=runtime.tool_call_id)],
@@ -94,6 +102,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         ask_weather_agent, ask_farm_context_agent, ask_knowledge_agent and ask_advisory_agent.
     """
 
+
     async def ask_fieldsat_agent(agent, name: str, task: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]):
         """Runs the Weather or Farm Context Agent on the saved field and saves its report as a finding."""
         requirements = runtime.state.get("requirements")
@@ -112,6 +121,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
             finding = failed(error)
         return save_finding(name, finding, runtime)
 
+    # Tool For : Communicate with tool  of Weather Information by open-meteo api via Field-Sat MCP Server
     @tool(parse_docstring=True)
     async def ask_weather_agent(task: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]) -> Command:
         """Ask the Weather Agent about the rain on the farmer's field: the last 7 days, the last 48 hours and the next 48 hours.
@@ -123,7 +133,8 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
                 comes from the saved requirements.
         """
         return await ask_fieldsat_agent(weather_agent, "weather", task, runtime)
-
+    
+    # Tool For : Communicate with Copernucus Satellite tool via Field-Sat MCP Server
     @tool(parse_docstring=True)
     async def ask_farm_context_agent(task: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]) -> Command:
         """Ask the Farm Context Agent how healthy the farmer's field looks from the satellite: NDVI trend, uniformity and data quality.
@@ -136,6 +147,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         """
         return await ask_fieldsat_agent(farm_context_agent, "farm_context", task, runtime)
 
+    # Tool For : Communicate with Field Oralcle Knowledge Base with vector DB
     @tool(parse_docstring=True)
     async def ask_knowledge_agent(question: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]) -> Command:
         """Ask the Agri Knowledge Agent (FieldOracle), which searches cultivation guides, government policies and farm records.

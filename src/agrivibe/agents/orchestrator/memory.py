@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """Central memory: what the orchestrator and the specialists share, and for how long.
 
 - Context (`FarmerContext`): who is asking. The app passes it with every run. Agents read it
@@ -14,7 +20,7 @@ from typing import Annotated, Any, NotRequired, TypedDict
 from langchain.agents import AgentState
 from langchain.agents.middleware import ModelRequest, dynamic_prompt
 
-
+# Conext being maintained for the Orchestrator
 @dataclass
 class FarmerContext:
     """Who is asking. Passed with every run."""
@@ -55,7 +61,29 @@ class AgriVibeState(AgentState):
     """The orchestrator's state: its messages, plus the shared workflow state."""
 
     requirements: NotRequired[Requirements]
-    findings: Annotated[dict[str, Finding], merge_findings]
+    #merge_findings reducer will prevent loosing  parreal running agent findging and merge them together 
+    findings: Annotated[dict[str, Finding], merge_findings] 
+
+"""
+    // Example Agri Vibe State
+    {
+        "field_oracle :"{
+            "summary" : "satellite agent NDVI findings"
+             "data": {
+                "data_point_1" : ".....",
+                "data_point_2" : "....."
+             }
+        }, 
+        "weather_agent" : {
+            "summary" : weather agent findings"
+            "data": {
+               "data_point_1" : ".....",
+               "data_point_2" : "....."
+            }            
+        }    
+    }
+
+"""
 
 
 @dynamic_prompt

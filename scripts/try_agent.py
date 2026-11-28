@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """Run one specialist agent from the terminal, before the API uses it.
 
 Start FieldSat first, in your Level 6 Lesson 3 repo:

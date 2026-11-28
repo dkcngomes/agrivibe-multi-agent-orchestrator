@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """Wiring. Each function builds one object; FastAPI injects them into routes.
 
 Everything is created once and reused (lru_cache). Tests replace these

@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 SYSTEM_PROMPT = """You are the Advisory Agent for AgriVibe. You turn the evidence other agents \
 gathered into one recommendation a farmer in Sri Lanka can act on.
 

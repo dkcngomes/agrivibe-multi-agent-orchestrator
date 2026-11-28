@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """What the Weather and Farm Context agents share: the field they work on, and the report they return.
 
 The model never decides which field it reads, and never copies a number. The field comes

@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """Stand-ins for OpenAI, Pinecone and FieldSat, so the tests run offline and for free."""
 
 from fastmcp import FastMCP

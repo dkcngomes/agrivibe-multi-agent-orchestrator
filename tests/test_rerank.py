@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 from agrivibe.dependencies import get_knowledge_service
 from agrivibe.main import app
 from agrivibe.service.knowledge import KnowledgeService

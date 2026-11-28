@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 from langchain.tools import BaseTool, tool
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore

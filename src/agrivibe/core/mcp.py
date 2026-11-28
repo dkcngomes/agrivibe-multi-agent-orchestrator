@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 """The FieldSat MCP server's tools, loaded as LangChain tools, and its instructions for using them.
 
 How to use the tools (which one to call first, what each argument means) is the server's

@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 SYSTEM_PROMPT = """You are FieldOracle, the knowledge agent for AgriVibe. You answer questions \
 about agriculture in Sri Lanka using only the FieldOracle knowledge base.
 

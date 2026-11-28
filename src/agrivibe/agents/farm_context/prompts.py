@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 SYSTEM_PROMPT = """You are the Farm Context Agent for AgriVibe. You report how healthy one \
 registered field in Sri Lanka looks from space, using the FieldSat tools.
 

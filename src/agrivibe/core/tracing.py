@@ -1,3 +1,9 @@
+"""
+Project : AgriVibes MCP Multi Agent Orchestration
+Maintained By : D.K.C.N Gomes
+Year : 2026
+"""
+
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.runnables import RunnableConfig
 from langfuse import Langfuse
