@@ -102,8 +102,8 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         ask_weather_agent, ask_farm_context_agent, ask_knowledge_agent and ask_advisory_agent.
     """
 
-    # Common method to Communicate with MCP Server
-    async def call_fieldsat_mcp_server(agent, name: str, task: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]):
+    # Common method to Communicate with FieldSat MCP Server and save the respond result as a Report 
+    async def ask_fieldsat_agent(agent, name: str, task: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]):
         """Runs the Weather or Farm Context Agent on the saved field and saves its report as a finding."""
         requirements = runtime.state.get("requirements")
         if not requirements:
@@ -132,7 +132,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
             task: What you need, for example "Rain in the last week and the next 48 hours". The field
                 comes from the saved requirements.
         """
-        return await call_fieldsat_mcp_server(weather_agent, "weather", task, runtime)
+        return await ask_fieldsat_agent(weather_agent, "weather", task, runtime)
     
     # Tool For : Communicate with Copernucus Satellite tool via Field-Sat MCP Server
     @tool(parse_docstring=True)
@@ -145,7 +145,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
             task: What you need, for example "NDVI trend over the last 14 days". The field comes from
                 the saved requirements.
         """
-        return await call_fieldsat_mcp_server(farm_context_agent, "farm_context", task, runtime)
+        return await ask_fieldsat_agent(farm_context_agent, "farm_context", task, runtime)
 
     # Tool For : Communicate with Field Oralcle Knowledge Base with vector DB
     @tool(parse_docstring=True)
