@@ -113,8 +113,8 @@ def build_chat_service(settings: Settings, fieldsat: FieldSat) -> ChatService:
         farm_context_agent,
         knowledge_agent,
         advisory_agent,
-        checkpointer=InMemorySaver(),
-        store=InMemoryStore(),
+        checkpointer=InMemorySaver(), #Volatile Memories 
+        store=InMemoryStore(), #Volatile Memories 
     )
     return ChatService(orchestrator, get_tracer())
 

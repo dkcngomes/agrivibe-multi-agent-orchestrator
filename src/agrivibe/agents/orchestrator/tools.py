@@ -24,7 +24,6 @@ from agrivibe.agents.orchestrator.memory import AgriVibeState, FarmerContext, Fi
 
 logger = logging.getLogger(__name__)
 
-
 def brief(task: str, requirements: Requirements | None) -> str:
     """Puts the saved requirements above the task, so every specialist works on the same field."""
     if not requirements:
@@ -46,14 +45,14 @@ def failed(error: Exception) -> Finding:
     """The finding for a specialist that raised, so one broken specialist does not end the whole answer."""
     return Finding(summary=f"This agent failed and returned nothing ({error}).", data={})
 
-
+# Command to update the Oracle's State Object (memory) with Tool call result message text
 def save_finding(name: str, finding: Finding, runtime: ToolRuntime) -> Command:
     """Writes a specialist's finding to central memory and hands it to the orchestrator.
 
     A tool that updates state returns a Command instead of a string. The Command must
     include the ToolMessage the orchestrator reads as the tool's result.
     """
-    return Command(update={
+    return Command(update={  
         "findings": {name: finding},
         "messages": [ToolMessage(as_text(finding), tool_call_id=runtime.tool_call_id)],
     })
@@ -161,7 +160,8 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         """
         task = brief(question, runtime.state.get("requirements"))
         try:
-            result = await knowledge_agent.ainvoke({"messages": [{"role": "user", "content": task}]})
+            result = await knowledge_agent.ainvoke({"messages": [{"role": "user", "content": task}]}) # Call ai agent
+
             answer = result["structured_response"]  # a CitedAnswer
 
             # Each sentence followed by the passages it cites, and every cited id once, in order.
@@ -177,7 +177,8 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         return save_finding("knowledge", finding, runtime)
 
     # return_direct: the Advisory Agent's answer is the reply. The orchestrator does not reword it.
-    @tool(parse_docstring=True, return_direct=True)
+    # return_direct=True stops the loop , agent does not goes to model with this asnwer. consider its final
+    @tool(parse_docstring=True, return_direct=True) 
     async def ask_advisory_agent(decision: str, runtime: ToolRuntime[FarmerContext, AgriVibeState]) -> str:
         """Ask the Advisory Agent for the final recommendation on a decision, such as whether to spray or fertilise this week.
 
@@ -196,7 +197,7 @@ def make_specialist_tools(weather_agent, farm_context_agent, knowledge_agent, ad
         )
         try:
             result = await advisory_agent.ainvoke({"messages": [{"role": "user", "content": task}]})
-            return result["messages"][-1].text
+            return result["messages"][-1].text # Last message what is generated as final
         except Exception as error:
             logger.exception("%s failed", advisory_agent.name)
             return failed(error)["summary"]

@@ -53,11 +53,12 @@ class ChatService:
             The reply, the tools the orchestrator called for it, and the saved requirements
             and findings.
         """
-        thread_id = thread_id or str(uuid4())
+        thread_id = thread_id or str(uuid4()) #Genereating a new thread Id if not specified
         result = await self.orchestrator.ainvoke(
-            # The empty findings clear the last question's evidence (see merge_findings).
+            # The empty findings clear the last question's evidence (see merge_findings)
             {"messages": [{"role": "user", "content": message}], "findings": {}},
-            run_config("chat", thread_id, self.tracer, user_id),
+            # Start Langraph Tracer Along with thread Id
+            run_config("chat", thread_id, self.tracer, user_id), 
             context=FarmerContext(user_id=user_id),
         )
         return ChatResponse(

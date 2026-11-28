@@ -86,7 +86,7 @@ class AgriVibeState(AgentState):
 
 """
 
-
+# Allowing the user to switch the Farm @dynamically during the conversation
 @dynamic_prompt
 def remember_the_farm(request: ModelRequest[FarmerContext]) -> str:
     """Adds the farmer's saved field, from the store, to the orchestrator's system prompt.

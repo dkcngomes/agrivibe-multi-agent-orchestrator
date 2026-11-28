@@ -43,7 +43,7 @@ class FieldSat:
             f"{self.instructions}"
         )
 
-
+# Tool Call for the MCP Server on Start Up.
 async def load_fieldsat(url: str | FastMCP) -> FieldSat:
     """Connects to the FieldSat MCP server and reads its tools and its instructions.
 
