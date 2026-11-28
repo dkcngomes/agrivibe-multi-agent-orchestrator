@@ -14,6 +14,7 @@ from agrivibe.agents.fieldoracle.schemas import CitedAnswer
 from agrivibe.agents.fieldoracle.tools import make_search_tool
 from agrivibe.core.reranker import Reranker
 
+
 # AGENT communicate with Vector DB Knowledge Base
 def build_fieldoracle_agent(
     model: BaseChatModel,

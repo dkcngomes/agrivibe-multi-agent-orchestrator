@@ -20,6 +20,7 @@ from typing import Annotated, Any, NotRequired, TypedDict
 from langchain.agents import AgentState
 from langchain.agents.middleware import ModelRequest, dynamic_prompt
 
+
 # Conext being maintained for the Orchestrator
 @dataclass
 class FarmerContext:

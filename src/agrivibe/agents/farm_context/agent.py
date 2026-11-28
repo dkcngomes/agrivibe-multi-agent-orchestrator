@@ -11,6 +11,7 @@ from agrivibe.agents.farm_context.prompts import SYSTEM_PROMPT
 from agrivibe.agents.fieldsat import FieldContext, FieldSatReport
 from agrivibe.core.mcp import FieldSat, pick_tools
 
+
 # AGENT SATELLITE INFORMATION VIA MCP
 # FieldSat is an Object of MCP Adapter Made of Lang Chain to be connected to Fast MCP Server
 def build_farm_context_agent(model: BaseChatModel, fieldsat: FieldSat):
